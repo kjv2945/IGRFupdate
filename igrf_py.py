@@ -3,40 +3,45 @@ import numpy as np
 import pandas as pd
 
 
-# def open_hdf5 (): 
-#     filename = "igrfDB.hf" #file name to use throughout
-
-
-#     with h5py.File("igrfDB.h5", mode="r") as h5file: #use with so everything indented know to call to file
-#         print (h5file.name) ## root group called /
-#         print (h5file.keys()) ## views groups 
-#         print (h5file["data"]) ## view amount of 'members' in each group
-#         print (h5file["header"])
-#         print (h5file.values())
-#         print (h5file["data"]["dvGh2020"]["DATA"][:]) # prints all data in group 
-
+def open_hdf5 (): 
+    with h5py.File("igrfDB.h5", mode="r") as h5file: #use with so everything indented know to call to file
+        # print (h5file.name) ## root group called /
+        # print (h5file.keys()) ## views groups 
+        # print (h5file["data"]) ## view amount of 'members' in each group
+        # print (h5file["header"])
+        # print (h5file.values())
+        # print (h5file["data"]["dvGh2015"]["DATA"][:]) # prints all data in group 
+        newdset = f.create_dataset("IGRF2020", (195), dtype = int) 
+        data = h5file["data"]["dvGh2015"]["DATA"]
+        print (data)
 # open_hdf5 () # to run function 
 
-# def open_csv ():
-#     import csv
+def edit_hdf5 ():
+    with h5py.File("igrfDB.h5", mode="r") as h5file:
+        arr = np.arange(100) # array
+        for d in h5file:
+            dset = h5file.create_dataset("data/", data = arr) #format for creating new data
+edit_hdf5 ()
 
-#     with open("igrf12coeffs.txt") as csvfile: 
-#         txtreader = csv.reader(csvfile, delimiter = " ")
-#         rows = [x for x in txtreader]
-#         # for row in rows:
-#         #     print (",".join(row))
-#         print (" ".join(rows[2:198]))
+def open_12coeffs ():
+    df12 = pd.read_csv("igrf12coeffs.txt", sep="\s+", skiprows= 3)
+    print(df.columns)
 
 
-# # open_csv ()
-# df = pd.read_table("igrf12coeffs.txt" , delimiter= " ")
+def open_13coeffs ():
+    df13 =  pd.read_csv("igrf13coeffs.txt", sep="\s+", skiprows= 3)
+    d2015 = df13["2015.0"]
+    print (d2015)
+# open_13coeffs () #to print file contents
 
-# print (df)
+def array_13coeffs():
+    df13 =  pd.read_csv("igrf13coeffs.txt", sep="\s+", skiprows= 3)
+    d2015 = df13["2015.0"]
+    d2020 = df13["2020.0"]
+    arr2015 = np.array([d2015])
+    arr2020 = np.array([d2020])
+    # print(arr2020)
+    # print(arr2020.size) #to check arrays have worked
 
-# read text file into pandas DataFrame
-df = pd.read_csv("igrf12coeffs.txt", sep=None, skiprows= 3)
-# display DataFrame
-print(df)
-# names = ["g/h", '1900.0', '1910.0 ', '1915.0',  '1920.0','1925.0','1930.0','1935.0','1940.0','1945.0','1950.0','1955.0','1960.0','1965.0','1970.0','1975.0','1980.0','1985.0','1990.0','1995.0', '2000.0','2005.0', '2010.0' ,'2015.0','2015-20']
-# open_panda
+array_13coeffs ()
 
