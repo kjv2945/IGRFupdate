@@ -32,6 +32,30 @@ print (h5file["data"]["dvGh2020"]["DATA"][:]) #for example
 ### Therefore we are missing:
 * 2020 IGRF from IGRF13
 * SV 2020-2025 from IGRF13
+### &nbsp;
+### 4/5
+* attempted to open coefficents txt file using csv method, was unsuccessful 
+* tasked with relearning pandas and attempting to open file using that method
+* found method but error produced by (add in comments for 4/5)
+### &nbsp;
+### 11/5 
+* (correct later)
+* fixed opening txt files
+* working on editing dataset myself
+
+### Plan
+* create array which contains the data needed to be entered into using for loop (195 data points) - done
+* fix datasets with new data for 2015 and 2020 data
+* add in 2020-2025 SV data?
+* how to output file?
+* check new file with viewer and code
+
+### Error
+* "Unable to open object (object 'data' doesn't exist)"
+* original code to read data from hdf5 file not even working 
+* Fixed by deleting and redownloading file but then tried new edit code again and same problem occured. 
+
+
 
  
 
