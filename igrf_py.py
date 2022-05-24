@@ -19,35 +19,25 @@ def open_hdf5 (): #function to view data within file
         data2020 = h5file["data"]["dvGh2020"]["DATA"]
         
         # print (data2015)
-
-        
+      
 # open_hdf5 () # to run function 
 
-# def edit_hdf5 ():
-        
-# # edit_hdf5 ()
 
 def open_12coeffs ():
     df12 = pd.read_csv("igrf12coeffs.txt", sep="\s+", skiprows= 3)
     print(df12.columns)
-
+# open_12coeffs () 
 
 def open_13coeffs ():
     df13 =  pd.read_csv("igrf13coeffs.txt", sep="\s+", skiprows= 3)
     d2015 = df13["2020-25"]
     print (df13.columns)
-# open_13coeffs () #to print file contents
+# open_13coeffs () 
 
-# def array_13coeffs():
-    
-#     # print(arr2020)
-#     # print(arr2020.size) #to check arrays have worked
-
-# array_13coeffs ()
 def edit_hdf5 ():
     shutil.copy('igrfDB.h5',"igrfDBupdate.h5")
     with h5py.File("igrfDBupdate.h5", mode = "r+") as h5file:
-        data2015edit = h5file["data"]["dvGh2015"]
+        data2015edit = h5file["data"]["dvGh2015"] 
         data2020edit = h5file["data"]["dvGh2020"]
         datafv = h5file["data"]["fvYears"]["DATA"]
         addgroup = h5file["data"]
