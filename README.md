@@ -1,6 +1,30 @@
 # IGRFupdate
 ### *Karla Vincent - AMENTUM internship*  
 ### &nbsp;
+## <u> Purpose </u>
+### The purpose of this code is to update the HDF5 file used to describe the International Geomagnetic Reference Field (IGRF). This is a set of spherical harmonic coefficients that can be input into a mathematical model to describe the Earth's magnetic field. In our case, we intend to use the IGRF data for the AE9/AP9/SPM: Radiation Belt and Space Plasma Specification Models. Developed by the Air Force Research Laboratory (AFRL), they model the fluxes of radiation belt and plasma particles in near-Earth space. Amentum Aerospace intends to use this model to alert satellite systems when they are entering a region of high radiation to avoid system malfunction.
+### Currently, the IGRF data used for the model system is outdated, using the IGRF-12 released in 2015. This describes a Definitive Geomagnetic Reference Field (DGRF) for years up to 2010, a provisional IGRF for 2015 and a predicative secular variation (SV) model for the interval 2015-2020. There is, however, an updated version of the IGRF, IGRF 13, which contains a DGRF for years up to 2015, an IRGF for 2020 and an SV model for the interval 2020-2025. To ensure that Amentum's use of the AE9/AP9/SPM system is as accurate as possible, the HDF5 file containing the coefficients of the IGRF12 must be updated to IGRF13.
+### &nbsp;
+## <u> Code Description </u>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## IGRF coding notes
 
