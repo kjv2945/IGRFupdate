@@ -1,5 +1,4 @@
 import array
-from audioop import add
 import h5py
 import numpy as np
 import pandas as pd
@@ -13,11 +12,10 @@ def open_hdf5 (): #function to view data within file
         # print (h5file.keys()) ## views groups 
         # print (h5file["data"]) ## view amount of 'members' in each group
         # print (h5file["header"])
-        # print (h5file.values())
-        # print (h5file["data"]["dvGh2015"]["DATA"][:]) # prints all data in group 
+        print (h5file.values())
+        print (h5file["data"]["dvGh2015"]["DATA"][:]) # prints all data in group 
         data2015 = h5file["data"]["dvGh2015"]["DATA"][:]
         data2020 = h5file["data"]["dvGh2020"]["DATA"]
-        
         # print (data2015)
       
 # open_hdf5 () # to run function 

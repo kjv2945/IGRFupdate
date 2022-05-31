@@ -2,10 +2,33 @@
 ### *Karla Vincent - AMENTUM internship*  
 ### &nbsp;
 ## <u> Purpose </u>
-### The purpose of this code is to update the HDF5 file used to describe the International Geomagnetic Reference Field (IGRF). This is a set of spherical harmonic coefficients that can be input into a mathematical model to describe the Earth's magnetic field. In our case, we intend to use the IGRF data for the AE9/AP9/SPM: Radiation Belt and Space Plasma Specification Models. Developed by the Air Force Research Laboratory (AFRL), they model the fluxes of radiation belt and plasma particles in near-Earth space. Amentum Aerospace intends to use this model to alert satellite systems when they are entering a region of high radiation to avoid system malfunction.
+### The purpose of this code is to update the HDF5 database used to describe the International Geomagnetic Reference Field (IGRF). This is a set of spherical harmonic coefficients that can be input into a mathematical model to describe the Earth's magnetic field. In our case, we intend to use the IGRF data for the AE9/AP9/SPM: Radiation Belt and Space Plasma Specification Models. Developed by the Air Force Research Laboratory (AFRL), they model the fluxes of radiation belt and plasma particles in near-Earth space. Amentum Aerospace intends to use this model to alert satellite systems of upcoming radiation hazards to avoid system malfunction.
 ### Currently, the IGRF data used for the model system is outdated, using the IGRF-12 released in 2015. This describes a Definitive Geomagnetic Reference Field (DGRF) for years up to 2010, a provisional IGRF for 2015 and a predicative secular variation (SV) model for the interval 2015-2020. There is, however, an updated version of the IGRF, IGRF 13, which contains a DGRF for years up to 2015, an IRGF for 2020 and an SV model for the interval 2020-2025. To ensure that Amentum's use of the AE9/AP9/SPM system is as accurate as possible, the HDF5 file containing the coefficients of the IGRF12 must be updated to IGRF13.
 ### &nbsp;
 ## <u> Code Description </u>
+### When beginning this IGRFupdate, a conda environment was created using
+```bash
+conda create -n IGRF python=3
+```
+
+### The code is divided into 3 main functions:
+* Opening and viewing the HDF5 database
+* Opening and viewing the txt files of the IGRF coeffients
+* Editing the database
+### <b> open_hdf5 : </b>
+### This function employs a with statment. This is a cleaner way of writing code where each line indented under the statement knows to call on the file stated
+``` python
+with h5py.File("igrfDB.h5", mode="r") as h5file:
+```
+### The function then prints:
+* the root group
+* the subgroups contained in the root group 
+* the amount of members in these subgroups
+* specific data within datasets of the subgroups
+
+### This function was used to intially inspect the HDF5 data file. A HDF5 view program was also utlilised. 
+### &nbsp;
+###
 
 
 
@@ -37,7 +60,7 @@ conda create -n IGRF python=3
 ``` python
 with h5py.File("igrfDB.h5", mode="r") as h5file:
 ```
-##### This is a cleaner way of writing code where each line indented under the statement knows to call on the file stated
+#####This is a cleaner way of writing code where each line indented under the statement knows to call on the file stated
 ### **Future Notes**
  * Must launch file through anaconda prompt so ananconda environment can be accessed 
  * Attempted to import h5pyViewer but error showed. After research online found that it is incompatible with python 3
