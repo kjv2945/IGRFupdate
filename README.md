@@ -13,10 +13,10 @@ conda create -n IGRF python=3
 
 ### The code is divided into 3 main functions:
 * Opening and viewing the HDF5 database
-* Opening and viewing the txt files of the IGRF coeffients
+* Opening and viewing the txt files of the IGRF coefficients
 * Editing the database
-### <b> open_hdf5 : </b>
-### This function employs a with statment. This is a cleaner way of writing code where each line indented under the statement knows to call on the file stated
+### <b> open_hdf5: </b>
+### This function employs a with statement. This is a cleaner way of writing code where each line indented under the statement knows to call on the file stated
 ``` python
 with h5py.File("igrfDB.h5", mode="r") as h5file:
 ```
@@ -26,81 +26,63 @@ with h5py.File("igrfDB.h5", mode="r") as h5file:
 * the amount of members in these subgroups
 * specific data within datasets of the subgroups
 
-### This function was used to intially inspect the HDF5 data file. A HDF5 view program was also utlilised. 
+### This function was used to intially inspect the HDF5 data file. A HDF5 view program was also utilised. 
 ### &nbsp;
-###
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## IGRF coding notes
-
-### 20/4 
-#### Open HDF5 with windows termial
-```bash
-conda create -n IGRF python=3
-```
-#### with statment 
+### <b> open_xcoeffs: </b>
+### This function opens the txt file of the IGRF coefficients to inspect the columns and how the data is set up. Employs pandas.read.csv function e.g.
 ``` python
-with h5py.File("igrfDB.h5", mode="r") as h5file:
+pd.read_csv("igrf12coeffs.txt", sep="\s+", skiprows= 3)
 ```
-#####This is a cleaner way of writing code where each line indented under the statement knows to call on the file stated
-### **Future Notes**
- * Must launch file through anaconda prompt so ananconda environment can be accessed 
- * Attempted to import h5pyViewer but error showed. After research online found that it is incompatible with python 3
+### sep = "\s+" defines the Delimiter to use and skiprows skips the first few rows of the txt file as they contain text describe the file and are unnecessary. 
 ### &nbsp;
-### 27/4
-* attempted to create conda environment in python 2 to open h5pyviewer. Was unsuccessful
-* Downloaded HDF View program which allowed the inspection of each part of file but no representation but found that values for each data column named "DATA" and can view through code by:
-``` python
-print (h5file["data"]["dvGh2020"]["DATA"][:]) #for example
-```
-
-#### After producing the above data and comparing to IGRF12 coefficients found it was the data for SV 2015-2020
-* This is the predictive linear secular variation for 2015-2020
-#### After cross checking multiple columns the file is identical to IGRF12 coefficients
-#### Cross checking with IGRF13 up until 2010 is identical to our file. 2015 is slightly different. 
-### Therefore we are missing:
-* 2020 IGRF from IGRF13
-* SV 2020-2025 from IGRF13
+### After comparing our HDF5 database and IGRF12 and 13 coefficients determined our file matches IGRF12. Therefore must update the database to include elements from the IGRF:
+* update "2015" dataset to IGRF13 values
+* change "2020" dataset to IGRf13 2020 and not 2015-2020 SV
+* add dataset for IGRF12 2020-2025 SV
 ### &nbsp;
-### 4/5
-* attempted to open coefficents txt file using csv method, was unsuccessful 
-* tasked with relearning pandas and attempting to open file using that method
-* found method but error produced by (add in comments for 4/5)
+### <b> edit_hdf5: </b>
+### This function completes the update to the HDF5 database.
+### Firstly, employ shutil to copy the original file and create a HDF5update file. Then define:
+* datasets to be editied
+* group where new datasets will be added under
+* arrays of data from coefficients txt file
+### The datasets that are being updated must first be deleted. These include:
+* "2015" 
+* "2020"
+* "fvYears" (a dataset containing each year of coefficients). New dataset adds 2025. 
+* "iMaxYears" (a dataset only containing the max year). New max year is 2020.
+### Then employing create_dataset and create_group create each required new dataset and group to compete updated file. These include groups and datasets for "iSize2025" and "iNmax2025" that are required for each year's coefficients. 
 ### &nbsp;
-### 11/5 
-* (correct later)
-* fixed opening txt files
-* working on editing dataset myself
+### <b> open_hdf5update: </b>
+### Uses same format at open_hdf5 but is employed to check edit_hdf5 was successful. HDF5 view also useful to check update was successful. 
 
-### Plan
-* create array which contains the data needed to be entered into using for loop (195 data points) - done
-* fix datasets with new data for 2015 and 2020 data
-* add in 2020-2025 SV data?
-* how to output file?
-* check new file with viewer and code
 
-### Error
-* "Unable to open object (object 'data' doesn't exist)"
-* original code to read data from hdf5 file not even working 
-* Fixed by deleting and redownloading file but then tried new edit code again and same problem occured. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
